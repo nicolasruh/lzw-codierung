@@ -8,7 +8,7 @@
 
   const el = {
     text: $('text'), lang: $('lang'), message: $('message'),
-    prev: $('prev'), next: $('next'), all: $('all'), undo: $('undo'), reveal: $('reveal'), reset: $('reset'),
+    prev: $('prev'), next: $('next'), all: $('all'), undo: $('undo'), reveal: $('reveal'), auto: $('auto'), reset: $('reset'),
     codeBox: $('codeBox'), codeIn: $('codeIn'), textrow: $('textrow'), dict: $('dict'), log: $('log'),
     results: $('results'), binary: $('binary'), codes: $('codes'), stats: $('stats'),
     decForm: $('decForm'), decIn: $('decIn'), decOut: $('decOut'),
@@ -115,6 +115,14 @@
     else if (step.entry) { state.phase = 'entry'; setMsg('buildCodeOk', { code: step.code }, 'ok'); }
     else { state.k++; state.phase = 'prefix'; setMsg('buildLast', { code: step.code }, 'ok'); }
     el.codeIn.value = '';
+    render();
+  }
+
+  function autoComplete() {
+    if (state.mode !== 'build' || !state.enc || complete()) return;
+    state.k = total();
+    state.phase = 'prefix';
+    setMsg('allDone', { n: total() }, 'ok');
     render();
   }
 
@@ -269,6 +277,7 @@
     const done = complete();
     el.prev.hidden = el.next.hidden = el.all.hidden = build;
     el.undo.hidden = !build;
+    el.auto.hidden = !build || done;
     el.prev.disabled = !has || state.k === 0;
     el.next.disabled = !has || done;
     el.all.disabled = !has || done;
@@ -326,6 +335,7 @@
   el.next.addEventListener('click', showNext);
   el.all.addEventListener('click', showAll);
   el.undo.addEventListener('click', undo);
+  el.auto.addEventListener('click', autoComplete);
   el.reset.addEventListener('click', () => { reset(); render(); });
   el.reveal.addEventListener('click', () => {
     state.revealed = true;
