@@ -14,6 +14,15 @@
     decForm: $('decForm'), decIn: $('decIn'), decOut: $('decOut'),
   };
 
+  const EXAMPLES = [
+    'TOBEORNOTTOBE',
+    'TOBEORNOTTOBE'.repeat(5),
+    'ABABABABABABABAB',
+    'AAAAAAAAAAAAAAAA',
+    'ABRAKADABRA',
+    'Fischers Fritz fischt frische Fische',
+  ];
+
   const state = {
     mode: 'show',
     enc: null,      // Ergebnis von L.encode (Referenzloesung)
@@ -298,7 +307,21 @@
     if (build && has && state.phase === 'code') el.codeIn.focus();
   }
 
+  function fillExamples() {
+    const sel = $('examples');
+    sel.replaceChildren();
+    const first = mk('option', '', t('examplePick'));
+    first.value = '';
+    sel.appendChild(first);
+    EXAMPLES.forEach((ex, i) => {
+      const o = mk('option', '', (i + 1) + ') ' + t('ex' + (i + 1)));
+      o.value = String(i);
+      sel.appendChild(o);
+    });
+  }
+
   function applyI18n() {
+    fillExamples();
     document.documentElement.lang = I.getLang();
     document.title = t('title');
     document.querySelectorAll('[data-i18n]').forEach(e => { e.textContent = t(e.dataset.i18n); });
@@ -349,6 +372,15 @@
     ev.preventDefault();
     state.decoded = { codes: L.parseCodes(el.decIn.value) };
     renderDecode();
+  });
+
+  $('examples').addEventListener('change', ev => {
+    const i = ev.target.value;
+    if (i === '') return;
+    el.text.value = EXAMPLES[Number(i)];
+    ev.target.value = '';
+    fit();
+    setText();
   });
 
   applyI18n();
