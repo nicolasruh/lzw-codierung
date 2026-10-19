@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LZW-Codierung</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1 data-i18n="title">LZW-Codierung</h1>
+    <label class="lang"><span data-i18n="language">Sprache</span>
+      <select id="lang"><option value="de">Deutsch</option><option value="en">English</option></select>
+    </label>
+  </header>
+
+  <main>
+    <section class="panel row">
+      <label class="grow"><span data-i18n="textLabel">Nachricht:</span>
+        <textarea id="text" rows="1" wrap="off" autocomplete="off" spellcheck="false" data-i18n-placeholder="textPlaceholder">TOBEORNOTTOBEORTOBEORNOT</textarea>
+      </label>
+      <fieldset>
+        <legend data-i18n="modeLabel">Modus:</legend>
+        <label><input type="radio" name="mode" value="show" checked autocomplete="off"> <span data-i18n="modeShow">Anzeigen</span></label>
+        <label><input type="radio" name="mode" value="build" autocomplete="off"> <span data-i18n="modeBuild">Selbst bauen</span></label>
+      </fieldset>
+    </section>
+
+    <section class="panel">
+      <div class="buttons">
+        <button id="prev" data-i18n="prev">Zurück</button>
+        <button id="next" data-i18n="next">Weiter</button>
+        <button id="all" data-i18n="all">Ganzen Ablauf zeigen</button>
+        <button id="undo" data-i18n="undo">Rückgängig</button>
+        <button id="reveal" data-i18n="reveal">Codefolge auslesen</button>
+        <button id="reset" data-i18n="reset">Neu beginnen</button>
+      </div>
+      <p id="message" class="message" role="status"></p>
+      <form id="codeBox" class="codebox" hidden>
+        <label><span data-i18n="codeLabel">Nummer im Wörterbuch:</span>
+          <input id="codeIn" type="text" inputmode="numeric" autocomplete="off" size="6">
+        </label>
+        <button type="submit" data-i18n="codeOk">OK</button>
+      </form>
+      <h2 data-i18n="progressTitle">Nachricht</h2>
+      <div id="textrow" class="textrow"></div>
+    </section>
+
+    <section class="panel two">
+      <div>
+        <h2 data-i18n="dictTitle">Wörterbuch</h2>
+        <div id="dict" class="scroll"></div>
+      </div>
+      <div>
+        <h2 data-i18n="logTitle">Ablauf</h2>
+        <div id="log" class="scroll"></div>
+      </div>
+    </section>
+
+    <section id="results" class="panel" hidden>
+      <div class="head">
+        <h2 data-i18n="codesTitle">Codefolge</h2>
+        <label class="sub"><input type="checkbox" id="binary" autocomplete="off"> <span data-i18n="binary">Binär (variable Breite)</span></label>
+      </div>
+      <div id="codes" class="mono"></div>
+      <h2 data-i18n="statsTitle">Kennzahlen</h2>
+      <ul id="stats"></ul>
+      <h2 data-i18n="decTitle">Decodieren</h2>
+      <p class="note" data-i18n="decHint"></p>
+      <form id="decForm" class="codebox">
+        <input id="decIn" type="text" autocomplete="off" spellcheck="false" data-i18n-placeholder="decPlaceholder">
+        <button type="submit" data-i18n="decBtn">Decodieren</button>
+      </form>
+      <div id="decOut"></div>
+    </section>
+  </main>
+
+  <script src="js/lzw.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
