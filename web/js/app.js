@@ -17,10 +17,12 @@
   const EXAMPLES = [
     'TOBEORNOTTOBE',
     'TOBEORNOTTOBE'.repeat(5),
+    'TOBEORNOTTOBE'.repeat(20),
     'ABABABABABABABAB',
     'AAAAAAAAAAAAAAAA',
     'ABRAKADABRA',
     'Fischers Fritz fischt frische Fische',
+    'Zwölf Boxkämpfer jagen Viktor quer über den großen Sylter Deich. Falsches Üben von Xylophonmusik quält jeden größeren Zwerg. Franz jagt im komplett verwahrlosten Taxi quer durch Bayern.',
   ];
 
   const state = {
